@@ -2,7 +2,7 @@
 	var MAX_BUFFER = 16384;
 	
 	function whiteNoiseData (bufferSize) {
-		return function _whiteGen () {
+		return function () {
 			var data = [];
 			for (var i = 0; i < bufferSize; ++i) {
 				data[i] = Math.random() * 2 - 1;
@@ -14,7 +14,7 @@
 	function redNoiseData (bufferSize) {
 		var b0, b1, b2, b3, b4, b5, b6, noise = whiteNoiseData(bufferSize);
 		b0 = b1 = b2 = b3 = b4 = b5 = b6 = 0.0;
-		return function _redGen () {
+		return function () {
 			var acc, data = noise();
 			for (var i = 0; i < bufferSize; ++i) {
 				acc = data[i];
@@ -33,7 +33,7 @@
 	
 	function brownNoiseData (bufferSize) {
 		var last = 0.0, noise = whiteNoiseData(bufferSize);
-		return function _brownGen () {
+		return function () {
 			var acc, data = noise();
 			for (var i = 0; i < bufferSize; ++i) {
 				last = (last + (0.02 * data[i])) / 1.02;
