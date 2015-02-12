@@ -5,12 +5,13 @@ noise.js is a library that provides noise generators for the Web Audio
 API. Currently, noise.js provides generators for white noise, pink
 noise, and brown noise.
 
-Read [the post on Noisehack][] for details and a simple demo.
+Read [the post on Noisehack][] for details or go to 
+[my site](http://dtanders.net/noise/) for a UI to make some soothing noise.
 
 Here's [a more advanced demo](http://jsfiddle.net/szms8/6/) demonstrating
 both noise modulating oscillators and oscillators modulating noise.
 
-Usage
+Usage Examples
 -----
 
 ### White Noise
