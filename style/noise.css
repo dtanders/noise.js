@@ -1,5 +1,52 @@
 
+body {
+	font-family: sans-serif;
+	width: 99%;
+}
+
 .hidden {
 	display: none !important;
 	visibility: hidden;
+}
+
+#container {
+	max-width: 24rem;
+	margin: 0px auto;
+	padding: .25rem;
+}
+
+fieldset > label {
+	margin-right: .4rem;
+	white-space: nowrap;
+}
+
+form > label {
+	display: block;
+	width: 100%;
+	/*vertical-align: center;*/
+	margin-top: 1rem;
+}
+
+form > label > input {
+	display: block;
+	float: right;
+	width: 50%;
+}
+
+form > label > div {
+	float: left;
+	max-width: 50%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 20rem) {
+	.shorten {
+		display: none;
+	}
+	
+	form > label {
+		margin-top: 1.5rem;
+	}
 }

@@ -2,6 +2,35 @@
 	"use strict";
 	
 	var noisy = false;
+	
+	function persist(key, val) {
+		if ( Modernizr.localstorage ) {
+			localStorage[key] = val;
+		} else {//fuck you, dad, I'll do what I want
+			document.cookie = key + val + '; path=/; expires=Fri Dec 25 2037 00:00:00 GMT-0600 (Central Standard Time)';
+		}
+	}
+	
+	function lookup(key, backup) {
+		if ( Modernizr.localstorage ) {
+			return localStorage[key] || backup;
+		} else {
+			var ret = backup,
+				 cookies = [];
+			if(!navigator.cookieEnabled || document.cookie.indexOf(key) < 0){
+				return backup;
+			}
+			
+			cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; ++i) {
+				if (cookies[i].indexOf(key) === 0 && cookies[i].indexOf('=') === key.length) {
+					return cookies[i].split('=')[1];
+				}
+			}
+			return backup;
+		}
+	}
+	
 	try {
 		noisy = new NoiseMaker();
 	} catch (ex) {
@@ -21,12 +50,16 @@
 		}
 			
 		$buttons.on('click', function (e) {
-			noisy.start($(this).val());
+			var val = $(this).val();
+			noisy.start(val);
+			persist('color', val);
 		});
 		
 		function bindInput ($sel, prop) {
-			$sel.val(noisy[prop]).on('input', function () {
+			$sel.val(lookup(prop, noisy[prop]))
+			 .on('input', function () {
 				noisy[prop] = $sel.val();
+				persist(prop, $sel.val());
 			});
 		}
 		
@@ -34,7 +67,7 @@
 		bindInput($period, 'period');
 		bindInput($magnitude, 'magnitude');
 		
-		$('#brown').click();
+		$('#' + lookup('color', 'brown')).click();
 	});
 	
 	window.noisy = noisy;

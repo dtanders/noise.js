@@ -8,13 +8,14 @@
 	<link type="text/css" rel="stylesheet" href="style/normalize.css">
 	<link type="text/css" rel="stylesheet" href="style/noise.css">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 	<script src="js/noise.js"></script>
 	<script src="js/noiseMaker.js"></script>
 	<script src="js/main.js"></script>
 </head>
 <body>
 	<div id='container'>
-		<h1>Let's make some noise!</h1>
+		<h1>Make some noise!</h1>
 		<div id='nosound' class='hidden'>
 		... or not.  Your browser doesn't support the AudioContext API, so there's not much I can do for you other than <a href='http://caniuse.com/#feat=audio-api'>direct you to some that do</a>.
 		</div>
@@ -27,7 +28,7 @@
 			</fieldset>
 			<label>Volume <input id='volume' type='range'/></label>
 			<label>Oscillate <input id='period' type='range' max='10' step='.5'/></label>
-			<label>Oscillation Magnitude <input id='magnitude' type='range'/></label>
+			<label><div>Osc<span class='shorten'>illation</span> Magnitude</div> <input id='magnitude' type='range'/></label>
 		</form>
 	</div>
 	<script>
