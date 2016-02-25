@@ -40,6 +40,16 @@
 	e=o.createElement(i);r=o.getElementsByTagName(i)[0];
 	e.src='//www.google-analytics.com/analytics.js';
 	r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-	ga('create','UA-15016774-1','auto');ga('send','pageview');
+	ga('create','UA-15016774-1','auto');
+	ga('set','page',window.location.pathname);
+	ga('send','pageview');
+	(function (ga) {
+		var heartbeats = 0;
+		function heartbeat() {
+			ga('send', 'timing', 'heartbeat', 'beat', heartbeats);
+			setTimeout(heartbeat, (Math.floor(++heartbeats / 60) + 1) * 60000);
+		}
+		heartbeat();
+	})(ga);
 	</script>
 </body>

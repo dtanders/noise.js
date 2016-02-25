@@ -55,18 +55,20 @@
 		});
 		
 		function bindInput ($sel, prop) {
-			$sel.val(lookup(prop, noisy[prop]))
+			var initial = lookup(prop, noisy[prop]);
+			$sel.val(initial)
 			 .on('input', function () {
 				var val = $sel.val();
 				noisy[prop] = val;
 				persist(prop, val);
 			});
+			noisy[prop] = initial;
 		}
 		
 		bindInput($volume, 'volume');
 		bindInput($period, 'period');
 		bindInput($magnitude, 'magnitude');
-		
+
 		$('#' + lookup('color', 'brown')).click();
 	});
     window.noisy = noisy;
