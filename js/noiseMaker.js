@@ -1,9 +1,7 @@
-//based on http://noisehack.com/generate-noise-web-audio-api/
 function NoiseMaker(){
 	"use strict";
 	var me = this,
-		 audioContext = window.AudioContext || window.webkitAudioContext || 
-				window.msAudioContext || window.oAudioContext || window.mozAudioContext,
+		 AudioContext = window.AudioContext || window.webkitAudioContext,
 		 ctx = new AudioContext(),
 		 current = false,
 		 gain = ctx.createGain(),
@@ -12,8 +10,11 @@ function NoiseMaker(){
 		 oscillator = ctx.createOscillator(),
 		 oscillatorConnected = false; //because stopping one and starting it back up is a no-no
 	
-	function setVolume (to) {
-		gain.gain.value = to / 100;
+	function setVolume (vol) {
+		if (isNaN(vol)) {
+			return;
+		}
+		gain.gain.value = clampPositive(vol, 100) / 100;
 	}
 	
 	function getVolume () {
@@ -21,7 +22,8 @@ function NoiseMaker(){
 	}
 	
 	function setPeriod (sec) {
-		if (sec === 0) {
+		sec = Math.abs(sec);
+		if (sec == 0) {
 			if (oscillatorConnected) {
 				oscillator.disconnect();
 				oscillatingGain.gain.value = 1;
@@ -44,8 +46,11 @@ function NoiseMaker(){
 		return oscillatorLimit.gain.value * 100;
 	}
 	
-	function setMagnitude (pct) {
-		oscillatorLimit.gain.value = pct / 100;
+	function setMagnitude (mag) {
+		if(isNaN(mag)){
+			return;
+		}
+		oscillatorLimit.gain.value = clampPositive(mag, 100) / 100;
 	}
 	
 	function stopNoise() {
@@ -75,6 +80,10 @@ function NoiseMaker(){
 	
 	function makeProp(propName, config) {
 		Object.defineProperty(me, propName, config);
+	}
+	
+	function clampPositive(num, limit){
+		return Math.min(limit, Math.abs(num));
 	}
 	
 	setVolume(10);

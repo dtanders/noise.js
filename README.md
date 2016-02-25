@@ -22,12 +22,14 @@ noiseMaker.colors; //key/value pairs of supported colors that you can call start
 
 //get/setters
 noiseMaker.volume = 10 //ouput volume: 0 to 100
-noiseMaker.period = 0 //oscillatior frequency denominator: (1/n > 0)Hz; 0 = off
+noiseMaker.period = 0 //oscillatior frequency denominator: 1/(n > 0)Hz; 0 = off (seconds between peaks)
 noiseMaker.magnitude = 60 //oscillation magnitude: 0 to 100
 
 //methods
 noiseMaker.start([color || 'brown', bufferSize (passed to noise.js methods]);
 noiseMaker.stop();
+
+//any invalid input should be silently ignored
 ~~~~
 
 noise.js

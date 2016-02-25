@@ -7,7 +7,7 @@
 		if ( Modernizr.localstorage ) {
 			localStorage[key] = val;
 		} else {//fuck you, dad, I'll do what I want
-			document.cookie = key + val + '; path=/; expires=Fri Dec 25 2037 00:00:00 GMT-0600 (Central Standard Time)';
+			document.cookie = key + '=' + val + '; path=/; expires=Fri Dec 25 2037 00:00:00 GMT-0600 (Central Standard Time)';
 		}
 	}
 	
@@ -15,8 +15,7 @@
 		if ( Modernizr.localstorage ) {
 			return localStorage[key] || backup;
 		} else {
-			var ret = backup,
-				 cookies = [];
+			var cookies = [];
 			if(!navigator.cookieEnabled || document.cookie.indexOf(key) < 0){
 				return backup;
 			}
@@ -58,8 +57,9 @@
 		function bindInput ($sel, prop) {
 			$sel.val(lookup(prop, noisy[prop]))
 			 .on('input', function () {
-				noisy[prop] = $sel.val();
-				persist(prop, $sel.val());
+				var val = $sel.val();
+				noisy[prop] = val;
+				persist(prop, val);
 			});
 		}
 		
@@ -69,6 +69,5 @@
 		
 		$('#' + lookup('color', 'brown')).click();
 	});
-	
-	window.noisy = noisy;
+    window.noisy = noisy;
 })($);
