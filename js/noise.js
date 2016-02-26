@@ -2,8 +2,8 @@
 	var MAX_BUFFER = 16384;
 	
 	function whiteNoiseData (bufferSize) {
+		var data = new Array(bufferSize);
 		return function () {
-			var data = [];
 			for (var i = 0; i < bufferSize; ++i) {
 				data[i] = Math.random() * 2 - 1;
 			}
@@ -44,7 +44,7 @@
 	}
 	
 	function genericNode (ctx, dataFactory, bufferSizeIn) {
-		var bufferSize = bufferSizeIn || MAX_BUFFER,
+		var bufferSize = Math.min(Math.abs(bufferSizeIn || MAX_BUFFER), MAX_BUFFER),
 			 node = ctx.createScriptProcessor(bufferSize, 1, 1),
 			 dataGen = dataFactory(bufferSize);
 		
