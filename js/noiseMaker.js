@@ -1,14 +1,21 @@
 function NoiseMaker(){
 	"use strict";
 	var me = this,
-		 AudioContext = window.AudioContext || window.webkitAudioContext,
-		 ctx = new AudioContext(),
-		 current = false,
-		 gain = ctx.createGain(),
-		 oscillatingGain = ctx.createGain(),
-		 oscillatorLimit = ctx.createGain(),
-		 oscillator = ctx.createOscillator(),
-		 oscillatorConnected = false; //because stopping one and starting it back up is a no-no
+		AudioContext = window.AudioContext || window.webkitAudioContext,
+		ctx = new AudioContext(),
+		nodeConstructors = {
+			red: ctx.createPinkNoise.bind(ctx),
+			pink: ctx.createPinkNoise.bind(ctx),
+			white: ctx.createWhiteNoise.bind(ctx),
+			brown: ctx.createBrownNoise.bind(ctx)
+		},
+		current = false,
+		gain = ctx.createGain(),
+		oscillatingGain = ctx.createGain(),
+		oscillatorLimit = ctx.createGain(),
+		oscillator = ctx.createOscillator(),
+		oscillatorConnected = false; //because you can't stop and then start them again
+		// just fake it by disconnectiong and re-connecting
 	
 	function setVolume (vol) {
 		if (isNaN(vol)) {
@@ -55,26 +62,19 @@ function NoiseMaker(){
 	
 	function stopNoise() {
 		if (current) {
-			current.disconnect();
+			current.disconnect(gain);
 		}
 		return me;
 	}
 	
 	function startNoise(color, bufferSize) {
 		stopNoise();
-		switch ((color || 'brown').toLowerCase()) {
-			case 'white': current = ctx.createWhiteNoise(bufferSize);
-				current.connect(gain);
-				break;
-			case 'red':
-			case 'pink':
-				current = ctx.createPinkNoise(bufferSize);
-				current.connect(gain);
-				break;
-			default:
-				current = ctx.createBrownNoise(bufferSize);
-				current.connect(gain);
+		color = (color || 'brown').toLowerCase();
+		if (!nodeConstructors[color]) {
+			throw new Error(color + " is not a supported noise color");
 		}
+		current = nodeConstructors[color](bufferSize);
+		current.connect(gain);
 		return me;
 	}
 	
