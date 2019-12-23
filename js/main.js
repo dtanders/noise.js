@@ -78,12 +78,14 @@
 				if (playing) {
 					noisy.stop();
 					$playPause.text("▶ Play");
+					playing = false;
 				} else {
 					if (!noisy.colors) {
 						finalizeSetup($colors, $volume, $period, $magnitude);
 					}
 					noisy.start($colors.find(':selected').val());
 					$playPause.text("⏸ Pause");
+					playing = true;
 				}
 			} catch (ex) {
 				$('#nosound').removeClass('hidden');

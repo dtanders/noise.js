@@ -63,6 +63,7 @@ function NoiseMaker () {
 	function stopNoise () {
 		if (current) {
 			current.disconnect(gain);
+			current = false;
 		}
 		return me;
 	}
