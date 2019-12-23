@@ -41,6 +41,16 @@ form > label > div {
 	text-overflow: ellipsis;
 }
 
+.play-pause-container {
+	text-align: center;
+	margin: .5em .5em;
+	font-size: large;
+}
+
+footer {
+	padding: 1em;
+}
+
 @media only screen and (max-width: 20rem) {
 	.shorten {
 		display: none;

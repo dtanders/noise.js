@@ -14,12 +14,15 @@
 	<script src="js/main.js"></script>
 </head>
 <body>
-	<div id='container'>
+	<section id='container'>
 		<h1>Make some noise!</h1>
 		<div id='nosound' class='hidden'>
 		... or not.  Your browser doesn't support the AudioContext API, so there's not much I can do for you other than <a href='http://caniuse.com/#feat=audio-api'>direct you to some that do</a>.
 		</div>
 		<form>
+			<div class="play-pause-container">
+				<button id="play-pause">▶ Start</button>
+			</div>
 			<fieldset id='buttons'>
 				<legend>Type/Color</legend>
 				<label>Brown <input id='brown' name='color' type='radio' value='brown'/></label>
@@ -30,10 +33,12 @@
 			<label>Oscillate <input id='period' type='range' max='10' step='.5'/></label>
 			<label><div>Osc<span class='shorten'>illation</span> Magnitude</div> <input id='magnitude' type='range'/></label>
 		</form>
+	</section>
+	<footer>
 		<p>
 			<a href="https://github.com/dtanders/noise.js" rel="external,license">source</a>
 		</p>
-	</div>
+	</footer>
 	<script>
 	(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
 	function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
@@ -45,7 +50,7 @@
 	ga('send','pageview');
 	(function (ga) {
 		var heartbeats = 0;
-		function heartbeat() {
+		function heartbeat () {
 			ga('send', 'timing', 'heartbeat', 'beat', heartbeats);
 			setTimeout(heartbeat, (Math.floor(++heartbeats / 60) + 1) * 60000);
 		}

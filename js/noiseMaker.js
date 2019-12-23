@@ -1,4 +1,4 @@
-function NoiseMaker(){
+function NoiseMaker () {
 	"use strict";
 	var me = this,
 		AudioContext = window.AudioContext || window.webkitAudioContext,
@@ -54,20 +54,20 @@ function NoiseMaker(){
 	}
 	
 	function setMagnitude (mag) {
-		if(isNaN(mag)){
+		if (isNaN(mag)) {
 			return;
 		}
 		oscillatorLimit.gain.value = clampPositive(mag, 100) / 100;
 	}
 	
-	function stopNoise() {
+	function stopNoise () {
 		if (current) {
 			current.disconnect(gain);
 		}
 		return me;
 	}
 	
-	function startNoise(color, bufferSize) {
+	function startNoise (color, bufferSize) {
 		stopNoise();
 		color = (color || 'brown').toLowerCase();
 		if (!nodeConstructors[color]) {
@@ -78,17 +78,14 @@ function NoiseMaker(){
 		return me;
 	}
 	
-	function makeProp(propName, config) {
+	function makeProp (propName, config) {
 		Object.defineProperty(me, propName, config);
 	}
 	
-	function clampPositive(num, limit){
+	function clampPositive (num, limit) {
 		return Math.min(limit, Math.abs(num));
 	}
 	
-	setVolume(10);
-	setMagnitude(60);
-	setPeriod(0);
 	gain.connect(oscillatingGain);
 	oscillator.start();
 	oscillatorLimit.connect(oscillatingGain.gain);
